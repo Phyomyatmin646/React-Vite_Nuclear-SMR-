@@ -1,0 +1,30 @@
+@import "tailwindcss";
+@import 'leaflet/dist/leaflet.css';
+
+/* Scroll Fade-in Up Animation */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Tailwind Class */
+.animate-fadeInUp {
+  animation: fadeInUp 1s ease forwards;
+}
+
+/* Optional: initial state for scroll elements */
+.scroll-animate {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
