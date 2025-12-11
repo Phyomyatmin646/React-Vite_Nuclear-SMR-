@@ -81,5 +81,4 @@ src/
 - Desktop: > 1024px
 
 ## License
-
-MIT
+Phyo Myat Min(TTU)
