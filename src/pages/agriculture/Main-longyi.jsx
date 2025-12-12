@@ -90,7 +90,7 @@ const DataCenter = () => {
 
         <div className="relative z-10 text-center text-white px-6 animate-fadeInUp">
           <h1 className="flex items-center justify-center gap-2 text-10xl md:text-5xl font-bold mb-4">
-            Hakha
+            Tedim
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -103,7 +103,7 @@ const DataCenter = () => {
           </h1>
 
           <p className="text-blue-100 text-lg font-semibold">
-            Hakha is a cool,high-altitude mountain city and the capital of Chin
+            Tedim is a cool,high-altitude mountain city and the capital of Chin
             State.
           </p>
         </div>
