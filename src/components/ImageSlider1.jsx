@@ -12,7 +12,7 @@ const ImageSlider = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 4000); // auto change every 4 seconds
+    }, 4000);
     return () => clearInterval(interval);
   }, []);
 
@@ -23,9 +23,8 @@ const ImageSlider = () => {
           key={index}
           src={img}
           alt={`Slide ${index + 1}`}
-          className={`absolute w-full h-full object-cover transition-opacity duration-1000 ${
-            index === currentIndex ? "opacity-100" : "opacity-0"
-          }`}
+          className={`absolute w-full h-full object-cover transition-opacity duration-1000 ${index === currentIndex ? "opacity-100" : "opacity-0"
+            }`}
         />
       ))}
     </div>

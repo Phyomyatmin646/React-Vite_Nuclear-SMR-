@@ -1,54 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SMR Siting & Grid Optimizer - Myanmar</title>
-  
-  <!-- Leaflet CSS -->
+
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  
-  <!-- Chart.js -->
+
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
-  <!-- Leaflet JS -->
+
+
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  
+
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-    
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: #f3f4f6;
       color: #1f2937;
     }
-    
+
     .snpp-container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 20px;
     }
-    
+
     .snpp-header {
       text-align: center;
       margin-bottom: 24px;
     }
-    
+
     .snpp-header h1 {
       font-size: 1.75rem;
       color: #111827;
       margin-bottom: 8px;
     }
-    
+
     .snpp-header p {
       color: #6b7280;
     }
-    
-    /* Tabs */
+
+
     .snpp-tabs {
       display: flex;
       gap: 4px;
@@ -57,7 +57,7 @@
       padding: 4px;
       border-radius: 8px;
     }
-    
+
     .snpp-tab {
       flex: 1;
       padding: 10px 16px;
@@ -70,64 +70,63 @@
       color: #6b7280;
       transition: all 0.2s;
     }
-    
+
     .snpp-tab:hover {
       color: #374151;
     }
-    
+
     .snpp-tab.active {
       background: white;
       color: #111827;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
-    
-    /* Panels */
+
+
     .snpp-panel {
       display: none;
       background: white;
       border-radius: 12px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
       overflow: hidden;
     }
-    
+
     .snpp-panel.active {
       display: block;
     }
-    
-    /* Module Layout */
+
+
     .snpp-module {
       display: grid;
       grid-template-columns: 300px 1fr;
       min-height: 550px;
     }
-    
+
     .snpp-sidebar {
       padding: 16px;
       border-right: 1px solid #e5e7eb;
       background: #f9fafb;
       overflow-y: auto;
     }
-    
+
     .snpp-main {
       padding: 16px;
       position: relative;
     }
-    
-    /* Map */
+
+
     #siting-map {
       width: 100%;
       height: 100%;
       min-height: 450px;
       border-radius: 8px;
     }
-    
-    /* Map instruction overlay */
+
     .map-instruction {
       position: absolute;
       top: 24px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(0,0,0,0.75);
+      background: rgba(0, 0, 0, 0.75);
       color: white;
       padding: 10px 20px;
       border-radius: 20px;
@@ -135,12 +134,12 @@
       z-index: 1000;
       pointer-events: none;
     }
-    
-    /* Controls */
+
+
     .control-group {
       margin-bottom: 20px;
     }
-    
+
     .control-group h3 {
       font-size: 0.75rem;
       text-transform: uppercase;
@@ -148,7 +147,7 @@
       color: #6b7280;
       margin-bottom: 10px;
     }
-    
+
     .checkbox-item {
       display: flex;
       align-items: center;
@@ -156,29 +155,29 @@
       margin-bottom: 8px;
       font-size: 0.875rem;
     }
-    
+
     .checkbox-item input {
       width: 16px;
       height: 16px;
     }
-    
+
     .slider-item {
       margin-bottom: 14px;
     }
-    
+
     .slider-item label {
       display: flex;
       justify-content: space-between;
       font-size: 0.875rem;
       margin-bottom: 6px;
     }
-    
+
     .slider-item input[type="range"] {
       width: 100%;
       height: 6px;
     }
-    
-    /* Selected Site Panel */
+
+
     .site-panel {
       background: white;
       border: 2px solid #3b82f6;
@@ -186,7 +185,7 @@
       padding: 16px;
       margin-top: 16px;
     }
-    
+
     .site-panel h3 {
       font-size: 1rem;
       margin-bottom: 12px;
@@ -195,14 +194,14 @@
       align-items: center;
       gap: 8px;
     }
-    
+
     .site-coords {
       font-size: 0.75rem;
       color: #6b7280;
       margin-bottom: 12px;
       font-family: monospace;
     }
-    
+
     .overall-score {
       text-align: center;
       padding: 16px;
@@ -210,113 +209,135 @@
       border-radius: 8px;
       margin-bottom: 16px;
     }
-    
+
     .overall-score label {
       font-size: 0.75rem;
-      color: rgba(255,255,255,0.8);
+      color: rgba(255, 255, 255, 0.8);
       text-transform: uppercase;
     }
-    
+
     .overall-score .score-value {
       font-size: 2.5rem;
       font-weight: 700;
       color: white;
     }
-    
+
     .overall-score .score-label {
       font-size: 0.875rem;
-      color: rgba(255,255,255,0.9);
+      color: rgba(255, 255, 255, 0.9);
     }
-    
-    /* Score Breakdown */
+
+
     .score-breakdown {
       margin-top: 12px;
     }
-    
+
     .score-item {
       margin-bottom: 12px;
     }
-    
+
     .score-item-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 4px;
     }
-    
+
     .score-item-label {
       font-size: 0.8125rem;
       color: #374151;
     }
-    
+
     .score-item-value {
       font-size: 0.8125rem;
       font-weight: 600;
     }
-    
+
     .score-bar {
       height: 8px;
       background: #e5e7eb;
       border-radius: 4px;
       overflow: hidden;
     }
-    
+
     .score-fill {
       height: 100%;
       border-radius: 4px;
       transition: width 0.5s ease;
     }
-    
+
     .score-detail {
       font-size: 0.75rem;
       color: #6b7280;
       margin-top: 4px;
     }
-    
-    /* Score colors */
-    .score-excellent { color: #16a34a; }
-    .score-good { color: #65a30d; }
-    .score-moderate { color: #ca8a04; }
-    .score-poor { color: #dc2626; }
-    
-    .fill-excellent { background: #22c55e; }
-    .fill-good { background: #84cc16; }
-    .fill-moderate { background: #eab308; }
-    .fill-poor { background: #ef4444; }
-    
-    /* Recommendation */
+
+
+    .score-excellent {
+      color: #16a34a;
+    }
+
+    .score-good {
+      color: #65a30d;
+    }
+
+    .score-moderate {
+      color: #ca8a04;
+    }
+
+    .score-poor {
+      color: #dc2626;
+    }
+
+    .fill-excellent {
+      background: #22c55e;
+    }
+
+    .fill-good {
+      background: #84cc16;
+    }
+
+    .fill-moderate {
+      background: #eab308;
+    }
+
+    .fill-poor {
+      background: #ef4444;
+    }
+
+
     .recommendation {
       margin-top: 16px;
       padding: 12px;
       border-radius: 8px;
       font-size: 0.875rem;
     }
-    
+
     .recommendation.excellent {
       background: #dcfce7;
       color: #166534;
       border: 1px solid #86efac;
     }
-    
+
     .recommendation.good {
       background: #ecfccb;
       color: #3f6212;
       border: 1px solid #bef264;
     }
-    
+
     .recommendation.moderate {
       background: #fef9c3;
       color: #854d0e;
       border: 1px solid #fde047;
     }
-    
+
     .recommendation.poor {
       background: #fee2e2;
       color: #991b1b;
       border: 1px solid #fca5a5;
     }
-    
-    /* Action buttons */
+
+
     .btn {
       width: 100%;
       padding: 10px 16px;
@@ -328,40 +349,40 @@
       transition: all 0.2s;
       margin-top: 12px;
     }
-    
+
     .btn-primary {
       background: #3b82f6;
       color: white;
     }
-    
+
     .btn-primary:hover {
       background: #2563eb;
     }
-    
+
     .btn-secondary {
       background: #e5e7eb;
       color: #374151;
     }
-    
+
     .btn-secondary:hover {
       background: #d1d5db;
     }
-    
-    /* Legend */
+
+
     .legend {
       margin-top: 16px;
       padding: 12px;
       background: #f9fafb;
       border-radius: 8px;
     }
-    
+
     .legend h4 {
       font-size: 0.75rem;
       text-transform: uppercase;
       color: #6b7280;
       margin-bottom: 8px;
     }
-    
+
     .legend-item {
       display: flex;
       align-items: center;
@@ -369,21 +390,21 @@
       font-size: 0.75rem;
       margin-bottom: 4px;
     }
-    
+
     .legend-color {
       width: 16px;
       height: 16px;
       border-radius: 3px;
     }
-    
-    /* Grid Sim styles */
+
+
     .source-config {
       background: #f9fafb;
       padding: 12px;
       border-radius: 8px;
       margin-bottom: 8px;
     }
-    
+
     .source-config h4 {
       font-size: 0.875rem;
       margin-bottom: 8px;
@@ -391,57 +412,56 @@
       align-items: center;
       gap: 8px;
     }
-    
+
     .source-dot {
       width: 12px;
       height: 12px;
       border-radius: 50%;
     }
-    
+
     .metrics-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 12px;
       margin-bottom: 20px;
     }
-    
+
     .metric-card {
       background: #f9fafb;
       padding: 16px;
       border-radius: 8px;
       text-align: center;
     }
-    
+
     .metric-card label {
       font-size: 0.75rem;
       color: #6b7280;
     }
-    
+
     .metric-card value {
       display: block;
       font-size: 1.5rem;
       font-weight: 700;
       margin-top: 4px;
     }
-    
+
     .chart-container {
       position: relative;
       height: 300px;
     }
-    
-    /* Plant marker */
+
+
     .plant-marker {
       background: #3b82f6;
       border: 3px solid white;
       border-radius: 50%;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
-    
-    /* Placed plants list */
+
     .placed-plants {
       margin-top: 16px;
     }
-    
+
     .placed-plant-item {
       display: flex;
       justify-content: space-between;
@@ -453,11 +473,11 @@
       margin-bottom: 6px;
       font-size: 0.8125rem;
     }
-    
+
     .placed-plant-item .score {
       font-weight: 600;
     }
-    
+
     .placed-plant-item .remove-btn {
       background: none;
       border: none;
@@ -465,79 +485,80 @@
       cursor: pointer;
       padding: 2px 6px;
     }
-    
+
     .placed-plant-item .remove-btn:hover {
       color: #ef4444;
     }
-    
-    /* Empty state */
+
+
     .empty-state {
       text-align: center;
       padding: 24px;
       color: #9ca3af;
     }
-    
+
     .empty-state svg {
       width: 48px;
       height: 48px;
       margin-bottom: 12px;
       opacity: 0.5;
     }
-    
-    /* Responsive */
+
+
     @media (max-width: 768px) {
       .snpp-module {
         grid-template-columns: 1fr;
       }
-      
+
       .snpp-sidebar {
         border-right: none;
         border-bottom: 1px solid #e5e7eb;
       }
-      
+
       .metrics-grid {
         grid-template-columns: repeat(2, 1fr);
       }
     }
   </style>
 </head>
+
 <body>
   <div class="snpp-container">
     <header class="snpp-header">
       <h1>🔋 SMR Siting & Grid Optimizer</h1>
       <p>Small Nuclear Power Plant site selection for Myanmar</p>
     </header>
-    
-    <!-- Tabs -->
+
+
     <div class="snpp-tabs">
       <button class="snpp-tab active" data-tab="siting">📍 Site Selection</button>
       <button class="snpp-tab" data-tab="grid">⚡ Grid Simulation</button>
     </div>
-    
-    <!-- Panel 1: Siting Map -->
+
+
     <div class="snpp-panel active" id="panel-siting">
       <div class="snpp-module">
         <div class="snpp-sidebar">
           <div class="control-group">
             <h3>Data Layers</h3>
             <label class="checkbox-item">
-              <input type="checkbox" id="layer-seismic" checked> 
+              <input type="checkbox" id="layer-seismic" checked>
               <span>🟥 Seismic Risk Zones</span>
             </label>
             <label class="checkbox-item">
-              <input type="checkbox" id="layer-water" checked> 
+              <input type="checkbox" id="layer-water" checked>
               <span>🟦 Water Sources</span>
             </label>
             <label class="checkbox-item">
-              <input type="checkbox" id="layer-grid" checked> 
+              <input type="checkbox" id="layer-grid" checked>
               <span>🟪 Grid Infrastructure</span>
             </label>
             <label class="checkbox-item">
-              <input type="checkbox" id="layer-population" checked> 
+              <input type="checkbox" id="layer-population" checked>
               <span>🟧 Population Centers</span>
             </label>
           </div>
-          
+
           <div class="control-group">
             <h3>Criteria Weights</h3>
             <div class="slider-item">
@@ -557,7 +578,7 @@
               <input type="range" id="weight-pop" min="0" max="100" value="25">
             </div>
           </div>
-          
+
           <div class="legend">
             <h4>Score Legend</h4>
             <div class="legend-item">
@@ -577,15 +598,17 @@
               <span>Poor (0-39)</span>
             </div>
           </div>
-          
+
           <!-- Placed plants list -->
           <div class="placed-plants" id="placed-plants-container" style="display:none;">
-            <h3 style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em;color:#6b7280;margin-bottom:10px;">Placed Sites</h3>
+            <h3
+              style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em;color:#6b7280;margin-bottom:10px;">
+              Placed Sites</h3>
             <div id="placed-plants-list"></div>
             <button class="btn btn-secondary" id="clear-all-btn">Clear All Sites</button>
           </div>
         </div>
-        
+
         <div class="snpp-main">
           <div class="map-instruction" id="map-instruction">
             👆 Click on the map to place an SMR site and get suitability scores
@@ -594,15 +617,14 @@
         </div>
       </div>
     </div>
-    
-    <!-- Panel 2: Grid Simulation -->
+
     <div class="snpp-panel" id="panel-grid">
       <div class="snpp-module">
         <div class="snpp-sidebar">
           <div class="control-group">
             <h3>Generation Sources</h3>
           </div>
-          
+
           <div class="source-config">
             <h4><span class="source-dot" style="background:#22c55e"></span> SMR Nuclear</h4>
             <div class="slider-item">
@@ -610,7 +632,7 @@
               <input type="range" id="smr-capacity" min="0" max="500" value="300">
             </div>
           </div>
-          
+
           <div class="source-config">
             <h4><span class="source-dot" style="background:#facc15"></span> Solar</h4>
             <div class="slider-item">
@@ -618,7 +640,7 @@
               <input type="range" id="solar-capacity" min="0" max="500" value="200">
             </div>
           </div>
-          
+
           <div class="source-config">
             <h4><span class="source-dot" style="background:#38bdf8"></span> Hydro</h4>
             <div class="slider-item">
@@ -626,7 +648,7 @@
               <input type="range" id="hydro-capacity" min="0" max="500" value="250">
             </div>
           </div>
-          
+
           <div class="source-config">
             <h4><span class="source-dot" style="background:#f87171"></span> Natural Gas</h4>
             <div class="slider-item">
@@ -634,10 +656,10 @@
               <input type="range" id="gas-capacity" min="0" max="500" value="400">
             </div>
           </div>
-          
+
           <button class="btn btn-primary" id="run-simulation">Run Simulation</button>
         </div>
-        
+
         <div class="snpp-main">
           <div class="metrics-grid" id="metrics-grid">
             <div class="metric-card">
@@ -657,7 +679,7 @@
               <value id="metric-unmet">--</value>
             </div>
           </div>
-          
+
           <div class="chart-container">
             <canvas id="dispatch-chart"></canvas>
           </div>
@@ -666,17 +688,13 @@
     </div>
   </div>
 
-  <!-- Site Score Popup Template (hidden) -->
+
   <div id="score-popup-template" style="display:none;">
     <div class="site-panel" id="site-panel-content"></div>
   </div>
 
   <script>
-    // ============================================
-    // MYANMAR GEO DATA
-    // ============================================
-    
-    // Major cities / population centers
+
     const populationCenters = [
       { name: 'Yangon', coords: [16.8661, 96.1951], population: 5500000, radius: 80000 },
       { name: 'Mandalay', coords: [21.9588, 96.0891], population: 1500000, radius: 50000 },
@@ -687,45 +705,43 @@
       { name: 'Myitkyina', coords: [25.3867, 97.3936], population: 200000, radius: 20000 },
       { name: 'Taunggyi', coords: [20.7833, 97.0333], population: 180000, radius: 20000 },
     ];
-    
-    // Major rivers (water sources)
+
+
     const waterSources = [
       { name: 'Irrawaddy River', coords: [[25.5, 97.0], [24.0, 96.5], [22.0, 95.5], [19.5, 95.0], [17.0, 95.5], [16.0, 95.0]] },
       { name: 'Chindwin River', coords: [[26.0, 95.5], [24.5, 95.0], [23.0, 94.5], [22.0, 95.0]] },
       { name: 'Salween River', coords: [[20.0, 98.5], [18.0, 97.8], [16.5, 97.6]] },
       { name: 'Sittaung River', coords: [[19.5, 96.5], [18.0, 96.8], [17.0, 96.7]] },
     ];
-    
-    // Approximate grid infrastructure (transmission lines)
+
+
     const gridLines = [
       { name: 'North-South Main', coords: [[25.0, 96.5], [22.0, 96.0], [19.5, 96.0], [17.0, 96.2]] },
       { name: 'Yangon-Mandalay', coords: [[16.8, 96.2], [19.5, 96.0], [22.0, 96.1]] },
       { name: 'Western Grid', coords: [[20.0, 94.5], [18.0, 94.8], [16.5, 95.0]] },
       { name: 'Eastern Connection', coords: [[21.0, 97.0], [19.5, 97.5], [17.5, 97.5]] },
     ];
-    
-    // Seismic risk zones (based on fault lines)
+
+
     const seismicZones = [
-      { 
-        name: 'Sagaing Fault Zone', 
+      {
+        name: 'Sagaing Fault Zone',
         risk: 'high',
         coords: [[26.0, 95.8], [26.0, 96.8], [22.0, 96.5], [19.0, 96.3], [16.0, 96.8], [16.0, 95.8], [19.0, 95.3], [22.0, 95.5]]
       },
-      { 
-        name: 'Eastern Highland Zone', 
+      {
+        name: 'Eastern Highland Zone',
         risk: 'medium',
         coords: [[24.0, 97.0], [24.0, 98.5], [20.0, 98.5], [20.0, 97.0]]
       },
       {
         name: 'Western Fold Belt',
-        risk: 'medium', 
+        risk: 'medium',
         coords: [[21.0, 93.0], [21.0, 94.5], [18.0, 94.5], [18.0, 93.0]]
       }
     ];
-    
-    // ============================================
-    // STATE
-    // ============================================
+
+
     let sitingMap = null;
     let placedSites = [];
     let siteMarkers = [];
@@ -736,48 +752,43 @@
       grid: null,
       population: null
     };
-    
-    // ============================================
-    // TAB NAVIGATION
-    // ============================================
+
+
     const tabs = document.querySelectorAll('.snpp-tab');
     const panels = document.querySelectorAll('.snpp-panel');
 
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         const target = tab.dataset.tab;
-        
+
         tabs.forEach(t => t.classList.remove('active'));
         panels.forEach(p => p.classList.remove('active'));
-        
+
         tab.classList.add('active');
         document.getElementById(`panel-${target}`).classList.add('active');
-        
+
         if (target === 'siting' && sitingMap) {
           setTimeout(() => sitingMap.invalidateSize(), 100);
         }
       });
     });
 
-    // ============================================
-    // SITING MAP INITIALIZATION
-    // ============================================
     function initSitingMap() {
-      // Center on Myanmar
+
       sitingMap = L.map('siting-map').setView([19.5, 96.5], 6);
-      
-      // Base map
+
+
       L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; OpenStreetMap contributors'
       }).addTo(sitingMap);
-      
-      // Initialize layer groups
+
+
       layers.seismic = L.layerGroup();
       layers.water = L.layerGroup();
       layers.grid = L.layerGroup();
       layers.population = L.layerGroup();
-      
-      // Add seismic zones
+
+
       seismicZones.forEach(zone => {
         const color = zone.risk === 'high' ? '#ef4444' : '#f97316';
         L.polygon(zone.coords, {
@@ -787,16 +798,16 @@
           weight: 2
         }).bindTooltip(zone.name + ' (Seismic Risk: ' + zone.risk + ')').addTo(layers.seismic);
       });
-      
-      // Add water sources (rivers)
+
+
       waterSources.forEach(river => {
         L.polyline(river.coords, {
           color: '#3b82f6',
           weight: 4,
           opacity: 0.7
         }).bindTooltip(river.name).addTo(layers.water);
-        
-        // Add buffer zones along rivers
+
+
         river.coords.forEach(coord => {
           L.circle(coord, {
             radius: 30000,
@@ -807,8 +818,8 @@
           }).addTo(layers.water);
         });
       });
-      
-      // Add grid lines
+
+
       gridLines.forEach(line => {
         L.polyline(line.coords, {
           color: '#8b5cf6',
@@ -817,10 +828,10 @@
           opacity: 0.8
         }).bindTooltip(line.name + ' (Transmission Line)').addTo(layers.grid);
       });
-      
-      // Add population centers
+
+
       populationCenters.forEach(city => {
-        // Exclusion zone
+
         L.circle(city.coords, {
           radius: city.radius,
           color: '#f97316',
@@ -829,8 +840,8 @@
           weight: 1,
           dashArray: '5, 5'
         }).addTo(layers.population);
-        
-        // City marker
+
+
         L.circleMarker(city.coords, {
           radius: 6,
           color: '#1f2937',
@@ -839,14 +850,14 @@
           weight: 2
         }).bindTooltip(city.name + ' (Pop: ' + city.population.toLocaleString() + ')').addTo(layers.population);
       });
-      
-      // Add all layers initially
+
+
       layers.seismic.addTo(sitingMap);
       layers.water.addTo(sitingMap);
       layers.grid.addTo(sitingMap);
       layers.population.addTo(sitingMap);
-      
-      // Layer toggle handlers
+
+
       document.getElementById('layer-seismic').addEventListener('change', (e) => {
         e.target.checked ? layers.seismic.addTo(sitingMap) : sitingMap.removeLayer(layers.seismic);
       });
@@ -859,35 +870,33 @@
       document.getElementById('layer-population').addEventListener('change', (e) => {
         e.target.checked ? layers.population.addTo(sitingMap) : sitingMap.removeLayer(layers.population);
       });
-      
-      // Weight slider handlers
+
+
       ['seismic', 'water', 'grid', 'pop'].forEach(id => {
         const slider = document.getElementById(`weight-${id}`);
         const val = document.getElementById(`weight-${id}-val`);
         slider.addEventListener('input', () => {
           val.textContent = slider.value;
-          // Recalculate scores for all placed sites
+
           updateAllScores();
         });
       });
-      
-      // Map click handler - place SMR site
+
+
       sitingMap.on('click', (e) => {
         placeSite(e.latlng);
       });
-      
-      // Clear all button
+
+
       document.getElementById('clear-all-btn').addEventListener('click', clearAllSites);
     }
 
-    // ============================================
-    // SITE PLACEMENT & SCORING
-    // ============================================
+
     function placeSite(latlng) {
       const siteId = 'site-' + Date.now();
       const scores = calculateSiteScores(latlng);
-      
-      // Create custom icon
+
+
       const iconColor = getScoreColor(scores.overall);
       const icon = L.divIcon({
         className: 'plant-marker',
@@ -895,18 +904,17 @@
         iconSize: [24, 24],
         iconAnchor: [12, 12]
       });
-      
-      // Add marker
+
+
       const marker = L.marker(latlng, { icon: icon }).addTo(sitingMap);
-      
-      // Create popup content
+
       const popupContent = createScorePopup(latlng, scores, siteId);
-      marker.bindPopup(popupContent, { 
+      marker.bindPopup(popupContent, {
         maxWidth: 320,
         className: 'score-popup'
       }).openPopup();
-      
-      // Store site data
+
+
       const site = {
         id: siteId,
         latlng: latlng,
@@ -915,14 +923,14 @@
       };
       placedSites.push(site);
       siteMarkers.push(marker);
-      
-      // Update placed sites list
+
+
       updatePlacedSitesList();
-      
-      // Hide instruction after first placement
+
+
       document.getElementById('map-instruction').style.display = 'none';
     }
-    
+
     function calculateSiteScores(latlng) {
       const weights = {
         seismic: parseInt(document.getElementById('weight-seismic').value),
@@ -930,22 +938,22 @@
         grid: parseInt(document.getElementById('weight-grid').value),
         population: parseInt(document.getElementById('weight-pop').value)
       };
-      
-      // Calculate individual scores
+
+
       const seismicScore = calculateSeismicScore(latlng);
       const waterScore = calculateWaterScore(latlng);
       const gridScore = calculateGridScore(latlng);
       const populationScore = calculatePopulationScore(latlng);
-      
-      // Calculate weighted overall score
+
+
       const totalWeight = weights.seismic + weights.water + weights.grid + weights.population;
       const overall = totalWeight > 0 ? Math.round(
         (seismicScore.score * weights.seismic +
-         waterScore.score * weights.water +
-         gridScore.score * weights.grid +
-         populationScore.score * weights.population) / totalWeight
+          waterScore.score * weights.water +
+          gridScore.score * weights.grid +
+          populationScore.score * weights.population) / totalWeight
       ) : 0;
-      
+
       return {
         overall,
         seismic: seismicScore,
@@ -954,10 +962,10 @@
         population: populationScore
       };
     }
-    
+
     function calculateSeismicScore(latlng) {
       let minRisk = 'low';
-      
+
       for (const zone of seismicZones) {
         if (isPointInPolygon(latlng, zone.coords)) {
           if (zone.risk === 'high') {
@@ -967,18 +975,18 @@
           }
         }
       }
-      
+
       if (minRisk === 'medium') {
         return { score: 60, detail: 'Located in moderate seismic risk zone', risk: 'medium' };
       }
-      
+
       return { score: 95, detail: 'Located in low seismic risk area', risk: 'low' };
     }
-    
+
     function calculateWaterScore(latlng) {
       let minDist = Infinity;
       let nearestRiver = '';
-      
+
       for (const river of waterSources) {
         for (const coord of river.coords) {
           const dist = getDistance(latlng, coord);
@@ -988,9 +996,9 @@
           }
         }
       }
-      
+
       const distKm = minDist / 1000;
-      
+
       if (distKm < 20) {
         return { score: 95, detail: `Excellent - ${distKm.toFixed(0)}km from ${nearestRiver}`, distance: distKm };
       } else if (distKm < 50) {
@@ -1001,11 +1009,11 @@
         return { score: 25, detail: `Poor - ${distKm.toFixed(0)}km from nearest water source`, distance: distKm };
       }
     }
-    
+
     function calculateGridScore(latlng) {
       let minDist = Infinity;
       let nearestLine = '';
-      
+
       for (const line of gridLines) {
         for (let i = 0; i < line.coords.length - 1; i++) {
           const dist = pointToLineDistance(latlng, line.coords[i], line.coords[i + 1]);
@@ -1015,9 +1023,9 @@
           }
         }
       }
-      
+
       const distKm = minDist / 1000;
-      
+
       if (distKm < 15) {
         return { score: 95, detail: `Excellent - ${distKm.toFixed(0)}km from ${nearestLine}`, distance: distKm };
       } else if (distKm < 40) {
@@ -1028,33 +1036,33 @@
         return { score: 20, detail: `Poor - ${distKm.toFixed(0)}km from nearest grid connection`, distance: distKm };
       }
     }
-    
+
     function calculatePopulationScore(latlng) {
       let inExclusionZone = false;
       let nearestCity = '';
       let minDist = Infinity;
-      
+
       for (const city of populationCenters) {
         const dist = getDistance(latlng, city.coords);
-        
+
         if (dist < city.radius) {
-          return { 
-            score: 10, 
-            detail: `Inside ${city.name} exclusion zone - unsuitable`, 
+          return {
+            score: 10,
+            detail: `Inside ${city.name} exclusion zone - unsuitable`,
             inExclusionZone: true,
             nearestCity: city.name
           };
         }
-        
+
         if (dist < minDist) {
           minDist = dist;
           nearestCity = city.name;
         }
       }
-      
+
       const distKm = minDist / 1000;
-      const bufferKm = 50; // Ideal buffer distance
-      
+      const bufferKm = 50;
+
       if (distKm > bufferKm * 2) {
         return { score: 95, detail: `Excellent buffer - ${distKm.toFixed(0)}km from ${nearestCity}`, distance: distKm };
       } else if (distKm > bufferKm) {
@@ -1065,14 +1073,12 @@
         return { score: 35, detail: `Close to ${nearestCity} - ${distKm.toFixed(0)}km`, distance: distKm };
       }
     }
-    
-    // ============================================
-    // POPUP CREATION
-    // ============================================
+
+
     function createScorePopup(latlng, scores, siteId) {
       const overallClass = getScoreClass(scores.overall);
       const recommendation = getRecommendation(scores.overall);
-      
+
       return `
         <div style="min-width:280px;">
           <div style="font-size:0.75rem;color:#6b7280;font-family:monospace;margin-bottom:8px;">
@@ -1102,11 +1108,11 @@
         </div>
       `;
     }
-    
+
     function createScoreBar(label, score, detail) {
       const colorClass = getScoreClass(score);
       const fillColor = getScoreColor(score);
-      
+
       return `
         <div style="margin-bottom:10px;">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;">
@@ -1120,38 +1126,36 @@
         </div>
       `;
     }
-    
-    // ============================================
-    // HELPER FUNCTIONS
-    // ============================================
+
+
     function getScoreColor(score) {
       if (score >= 80) return '#22c55e';
       if (score >= 60) return '#84cc16';
       if (score >= 40) return '#eab308';
       return '#ef4444';
     }
-    
+
     function getScoreColorDark(score) {
       if (score >= 80) return '#16a34a';
       if (score >= 60) return '#65a30d';
       if (score >= 40) return '#ca8a04';
       return '#dc2626';
     }
-    
+
     function getScoreClass(score) {
       if (score >= 80) return 'excellent';
       if (score >= 60) return 'good';
       if (score >= 40) return 'moderate';
       return 'poor';
     }
-    
+
     function getScoreLabel(score) {
       if (score >= 80) return 'Excellent Site';
       if (score >= 60) return 'Good Site';
       if (score >= 40) return 'Moderate Site';
       return 'Poor Site';
     }
-    
+
     function getRecommendation(score) {
       if (score >= 80) {
         return {
@@ -1175,42 +1179,42 @@
         };
       }
     }
-    
+
     function getDistance(latlng1, coord2) {
       const lat1 = latlng1.lat || latlng1[0];
       const lng1 = latlng1.lng || latlng1[1];
       const lat2 = coord2[0];
       const lng2 = coord2[1];
-      
-      const R = 6371000; // Earth's radius in meters
+
+      const R = 6371000;
       const dLat = (lat2 - lat1) * Math.PI / 180;
       const dLng = (lng2 - lng1) * Math.PI / 180;
-      const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-                Math.sin(dLng/2) * Math.sin(dLng/2);
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+        Math.sin(dLng / 2) * Math.sin(dLng / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
       return R * c;
     }
-    
+
     function pointToLineDistance(point, lineStart, lineEnd) {
       const lat = point.lat;
       const lng = point.lng;
       const x1 = lineStart[1], y1 = lineStart[0];
       const x2 = lineEnd[1], y2 = lineEnd[0];
-      
+
       const A = lng - x1;
       const B = lat - y1;
       const C = x2 - x1;
       const D = y2 - y1;
-      
+
       const dot = A * C + B * D;
       const lenSq = C * C + D * D;
       let param = -1;
-      
+
       if (lenSq !== 0) param = dot / lenSq;
-      
+
       let xx, yy;
-      
+
       if (param < 0) {
         xx = x1;
         yy = y1;
@@ -1221,42 +1225,39 @@
         xx = x1 + param * C;
         yy = y1 + param * D;
       }
-      
+
       return getDistance(point, [yy, xx]);
     }
-    
+
     function isPointInPolygon(point, polygon) {
       const x = point.lng;
       const y = point.lat;
       let inside = false;
-      
+
       for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
         const xi = polygon[i][1], yi = polygon[i][0];
         const xj = polygon[j][1], yj = polygon[j][0];
-        
+
         if (((yi > y) !== (yj > y)) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi)) {
           inside = !inside;
         }
       }
-      
+
       return inside;
     }
-    
-    // ============================================
-    // SITE MANAGEMENT
-    // ============================================
+
     function updatePlacedSitesList() {
       const container = document.getElementById('placed-plants-container');
       const list = document.getElementById('placed-plants-list');
-      
+
       if (placedSites.length === 0) {
         container.style.display = 'none';
         return;
       }
-      
+
       container.style.display = 'block';
       list.innerHTML = '';
-      
+
       placedSites.forEach((site, index) => {
         const item = document.createElement('div');
         item.className = 'placed-plant-item';
@@ -1276,7 +1277,7 @@
         list.appendChild(item);
       });
     }
-    
+
     function removeSite(siteId) {
       const index = placedSites.findIndex(s => s.id === siteId);
       if (index > -1) {
@@ -1286,7 +1287,7 @@
         updatePlacedSitesList();
       }
     }
-    
+
     function clearAllSites() {
       placedSites.forEach(site => {
         sitingMap.removeLayer(site.marker);
@@ -1295,12 +1296,12 @@
       updatePlacedSitesList();
       document.getElementById('map-instruction').style.display = 'block';
     }
-    
+
     function updateAllScores() {
       placedSites.forEach(site => {
         site.scores = calculateSiteScores(site.latlng);
-        
-        // Update marker icon
+
+
         const iconColor = getScoreColor(site.scores.overall);
         const newIcon = L.divIcon({
           className: 'plant-marker',
@@ -1309,25 +1310,21 @@
           iconAnchor: [12, 12]
         });
         site.marker.setIcon(newIcon);
-        
-        // Update popup
+
+
         const popupContent = createScorePopup(site.latlng, site.scores, site.id);
         site.marker.setPopupContent(popupContent);
       });
-      
+
       updatePlacedSitesList();
     }
-    
-    // Make removeSite globally accessible
     window.removeSite = removeSite;
 
-    // ============================================
-    // GRID SIMULATION
-    // ============================================
+
     let dispatchChart = null;
 
     function initGridSim() {
-      // Slider value displays
+
       ['smr', 'solar', 'hydro', 'gas'].forEach(source => {
         const slider = document.getElementById(`${source}-capacity`);
         const val = document.getElementById(`${source}-cap-val`);
@@ -1335,16 +1332,13 @@
           val.textContent = slider.value;
         });
       });
-      
-      // Run simulation button
-      document.getElementById('run-simulation').addEventListener('click', runSimulation);
-      
-      // Initialize chart
+
+
       const ctx = document.getElementById('dispatch-chart').getContext('2d');
       dispatchChart = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: Array.from({length: 24}, (_, i) => `${i}:00`),
+          labels: Array.from({ length: 24 }, (_, i) => `${i}:00`),
           datasets: []
         },
         options: {
@@ -1352,7 +1346,7 @@
           maintainAspectRatio: false,
           scales: {
             x: { title: { display: true, text: 'Hour' } },
-            y: { 
+            y: {
               title: { display: true, text: 'MW' },
               stacked: true,
               beginAtZero: true
@@ -1372,15 +1366,15 @@
         hydro: parseInt(document.getElementById('hydro-capacity').value),
         gas: parseInt(document.getElementById('gas-capacity').value)
       };
-      
+
       const results = simulateDispatch(config);
-      
+
       // Update metrics
       document.getElementById('metric-cost').textContent = `$${(results.totalCost / 1000).toFixed(1)}k`;
       document.getElementById('metric-emissions').textContent = `${results.totalEmissions.toFixed(0)} t`;
       document.getElementById('metric-smr').textContent = `${(results.smrUtilization * 100).toFixed(0)}%`;
       document.getElementById('metric-unmet').textContent = `${results.unmetDemand.toFixed(0)} MWh`;
-      
+
       updateChart(results.hourly);
     }
 
@@ -1390,50 +1384,50 @@
       let totalEmissions = 0;
       let totalSmrOutput = 0;
       let totalUnmet = 0;
-      
+
       for (let hour = 0; hour < 24; hour++) {
-        // Myanmar demand curve
+
         const baseDemand = 350;
         const morningPeak = Math.exp(-Math.pow(hour - 9, 2) / 8) * 180;
         const eveningPeak = Math.exp(-Math.pow(hour - 20, 2) / 10) * 250;
         const demand = baseDemand + morningPeak + eveningPeak;
-        
-        // Available generation
+
+
         const smrAvailable = config.smr * 0.92;
-        
-        // Solar (tropical - good throughout day)
+
+
         const solarFactor = Math.max(0, Math.sin((hour - 5) * Math.PI / 14));
         const solarAvailable = config.solar * solarFactor * 0.75;
-        
-        // Hydro (seasonal but steady - monsoon dependent)
+
+
         const hydroAvailable = config.hydro * 0.65;
-        
-        // Dispatch in merit order
+
+
         let remaining = demand;
-        
+
         const smrOutput = Math.min(smrAvailable, remaining);
         remaining -= smrOutput;
-        
+
         const hydroOutput = Math.min(hydroAvailable, remaining);
         remaining -= hydroOutput;
-        
+
         const solarOutput = Math.min(solarAvailable, remaining);
         remaining -= solarOutput;
-        
+
         const gasOutput = Math.min(config.gas, remaining);
         remaining -= gasOutput;
-        
-        // Costs ($/MWh)
+
+
         const hourCost = smrOutput * 35 + hydroOutput * 10 + solarOutput * 0 + gasOutput * 85;
         totalCost += hourCost;
-        
-        // Emissions
+
+
         const hourEmissions = gasOutput * 0.45;
         totalEmissions += hourEmissions;
-        
+
         totalSmrOutput += smrOutput;
         totalUnmet += Math.max(0, remaining);
-        
+
         hourly.push({
           hour,
           demand,
@@ -1444,7 +1438,7 @@
           unmet: Math.max(0, remaining)
         });
       }
-      
+
       return {
         hourly,
         totalCost,
@@ -1494,17 +1488,15 @@
           pointRadius: 0
         }
       ];
-      
+
       dispatchChart.update();
     }
 
-    // ============================================
-    // INIT
-    // ============================================
     document.addEventListener('DOMContentLoaded', () => {
       initSitingMap();
       initGridSim();
     });
   </script>
 </body>
+
 </html>

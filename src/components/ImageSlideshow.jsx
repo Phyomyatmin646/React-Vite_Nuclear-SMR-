@@ -28,9 +28,8 @@ const Slideshow = ({ images, interval = 4500 }) => {
             <img
               src={img.src}
               alt={img.title || 'SNR Agriculture Infrastructure'}
-              className={`w-full h-full object-cover transition-opacity duration-1000 ${
-                i === current ? 'opacity-100' : 'opacity-0'
-              }`}
+              className={`w-full h-full object-cover transition-opacity duration-1000 ${i === current ? 'opacity-100' : 'opacity-0'
+                }`}
               onLoad={() => handleImageLoad(i)}
               crossOrigin="anonymous"
             />
@@ -74,17 +73,15 @@ const Slideshow = ({ images, interval = 4500 }) => {
         </button>
       </div>
 
-      {/* Dots Indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-20">
         {images.map((_, i) => (
           <button
             key={i}
             onClick={() => setCurrent(i)}
-            className={`transition-all duration-300 ${
-              i === current
+            className={`transition-all duration-300 ${i === current
                 ? 'w-10 h-2 bg-white rounded-full'
                 : 'w-2 h-2 bg-white/50 rounded-full hover:bg-white/80'
-            }`}
+              }`}
             aria-label={`Go to slide ${i + 1}`}
           />
         ))}

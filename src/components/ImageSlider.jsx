@@ -63,13 +63,12 @@ const ImageSlider = () => {
 
   return (
     <div className="relative w-full h-[250px] sm:h-[350px] md:h-[450px] lg:h-[500px] overflow-hidden bg-gray-900">
-      {/* Slides */}
+
       {slides.map((slide, index) => (
         <div
           key={slide.id}
-          className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
-            index === currentSlide ? 'opacity-100' : 'opacity-0'
-          }`}
+          className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${index === currentSlide ? 'opacity-100' : 'opacity-0'
+            }`}
         >
           <img
             src={slide.image}
@@ -79,10 +78,10 @@ const ImageSlider = () => {
               e.target.src = `https://picsum.photos/1200/600?random=${slide.id}`;
             }}
           />
-          {/* Overlay */}
+
           <div className="absolute inset-0 bg-black/40" />
-          
-          {/* Text Content */}
+
+
           <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-4">
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-4 drop-shadow-lg">
               {slide.title}
@@ -94,7 +93,7 @@ const ImageSlider = () => {
         </div>
       ))}
 
-      {/* Navigation Arrows */}
+
       <button
         onClick={goToPrevious}
         className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-2 sm:p-3 rounded-full transition-colors backdrop-blur-sm"
@@ -115,17 +114,16 @@ const ImageSlider = () => {
         </svg>
       </button>
 
-      {/* Dots Indicator */}
+
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
         {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all ${
-              index === currentSlide
+            className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all ${index === currentSlide
                 ? 'bg-white w-6 sm:w-8'
                 : 'bg-white/50 hover:bg-white/75'
-            }`}
+              }`}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}

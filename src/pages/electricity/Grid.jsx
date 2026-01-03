@@ -1,4 +1,4 @@
-// src/pages/electricity/Grid.jsx
+
 import React from 'react';
 import { Zap, ShieldCheck, ArrowRight, Globe, Activity, Gauge, RadioTower } from 'lucide-react';
 import Slideshow from '../../components/ImageSlideshow';
@@ -7,12 +7,12 @@ export default function Grid() {
   return (
     <div className="min-h-screen bg-gray-50">
 
-      
+
       <section className="relative bg-gradient-to-br from-blue-800 via-blue-700 to-cyan-600 text-white">
         <div className="absolute inset-0 bg-black opacity-40"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-28 lg:py-36">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-           
+
             <div className="space-y-8">
               <div className="flex items-center gap-4">
                 <Globe className="w-12 h-12 text-cyan-300" />
@@ -38,7 +38,7 @@ export default function Grid() {
               </div>
             </div>
 
-            
+
             <div className="relative h-96 lg:h-[500px]">
               <div className="w-full h-full rounded-3xl overflow-hidden shadow-2xl">
                 <Slideshow
@@ -54,7 +54,7 @@ export default function Grid() {
         </div>
       </section>
 
-     
+
       <section id="network" className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -68,10 +68,10 @@ export default function Grid() {
 
           <div className="grid lg:grid-cols-2 gap-12">
 
-            {/* Photo 1: Grid Network Diagram */}
+
             <div className="group relative rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500">
-              <img 
-                src="/images/grid.png" 
+              <img
+                src="/images/grid.png"
                 alt="SNR Agriculture Power Grid Network - Myanmar"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
@@ -87,8 +87,8 @@ export default function Grid() {
             </div>
 
             <div className="group relative rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500">
-              <img 
-                src="/images/operator.png" 
+              <img
+                src="/images/operator.png"
                 alt="Live Grid Monitoring - SNR Agriculture Myanmar"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
@@ -107,7 +107,7 @@ export default function Grid() {
         </div>
       </section>
 
-      
+
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-3 gap-10">
@@ -143,7 +143,7 @@ export default function Grid() {
         </div>
       </section>
 
-      {/* Stats Section */}
+
       <section className="py-20 bg-gradient-to-r from-blue-700 to-cyan-700 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8 text-center">

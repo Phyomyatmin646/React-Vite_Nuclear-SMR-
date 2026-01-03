@@ -18,7 +18,7 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import MyModel from "../../three/MyModel";
 
-// Register Chart.js components
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -111,9 +111,9 @@ const ChinStateIntro = () => {
 
   return (
     <div className="bg-white">
-  
+
       <div className="relative">
-        {/* Slideshow */}
+
         <div className="relative h-[300px] sm:h-[400px] md:h-[500px] overflow-hidden">
           {slides.map((slide, index) => (
             <div
@@ -133,7 +133,7 @@ const ChinStateIntro = () => {
             </div>
           ))}
 
-          {/* Overlay Content */}
+
           <div className="absolute inset-0 flex items-end">
             <div className="w-full p-6 md:p-10">
               <div className="max-w-4xl">
@@ -150,7 +150,6 @@ const ChinStateIntro = () => {
             </div>
           </div>
 
-          {/* Slide Indicators */}
           <div className="absolute bottom-4 right-4 flex gap-2">
             {slides.map((_, index) => (
               <button
@@ -164,10 +163,9 @@ const ChinStateIntro = () => {
         </div>
       </div>
 
-      {/* About Chin State */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          {/* Map Image */}
+
           <div className="relative">
             <img
               src="/images/map.png"
@@ -176,7 +174,7 @@ const ChinStateIntro = () => {
             />
           </div>
 
-          {/* Text Content */}
+
           <div>
             <h2 className="text-2xl md:text-3xl font-bold text-blue-900 mb-4">
               About Chin State
@@ -193,7 +191,7 @@ const ChinStateIntro = () => {
               productivity, food preservation, and economic opportunities for local communities.
             </p>
 
-            {/* Quick Stats */}
+
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               <div className="text-center p-3 bg-blue-50 rounded-lg">
                 <p className="text-xl md:text-2xl font-bold text-blue-900">~500K</p>
@@ -216,7 +214,7 @@ const ChinStateIntro = () => {
         </div>
       </div>
 
-      {/* Energy Challenges */}
+
       <div className="bg-gray-50 py-12 md:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
@@ -248,7 +246,7 @@ const ChinStateIntro = () => {
       <div className="bg-gray-100 py-12 md:py-16">
         <div className="max-w-6xl mx-auto px-4">
 
-         
+
           <div className="bg-white rounded-2xl shadow-xl p-6 md:p-10 border border-gray-200">
 
             <div className="text-center mb-8">
@@ -260,13 +258,13 @@ const ChinStateIntro = () => {
               </p>
             </div>
 
-            {/* Image */}
+
             <div className="flex justify-center h-150">
               <Canvas camera={{ position: [0, 2, 8], fov: 45 }}>
                 <ambientLight intensity={0.5} />
                 <directionalLight position={[5, 5, 5]} />
 
-                <MyModel />  {/* scaled + centered */}
+                <MyModel />
 
                 <OrbitControls />
               </Canvas>
@@ -312,7 +310,7 @@ const ChinStateIntro = () => {
             ))}
           </div>
 
-      
+
           <div className="mt-12 text-center">
             <div className="inline-block bg-blue-50 border border-blue-200 rounded-xl p-6 md:p-8">
               <h3 className="text-xl font-bold text-blue-900 mb-2">
@@ -547,23 +545,23 @@ const simulateDispatch = (config) => {
   let totalUnmet = 0;
 
   for (let hour = 0; hour < 24; hour++) {
-    
+
     const baseDemand = 350;
     const morningPeak = Math.exp(-Math.pow(hour - 9, 2) / 8) * 180;
     const eveningPeak = Math.exp(-Math.pow(hour - 20, 2) / 10) * 250;
     const demand = baseDemand + morningPeak + eveningPeak;
 
-    
+
     const smrAvailable = config.smr * 0.92;
 
-  
+
     const solarFactor = Math.max(0, Math.sin((hour - 5) * Math.PI / 14));
     const solarAvailable = config.solar * solarFactor * 0.75;
 
-    
+
     const hydroAvailable = config.hydro * 0.65;
 
-    
+
     let remaining = demand;
 
     const smrOutput = Math.min(smrAvailable, remaining);
@@ -578,7 +576,7 @@ const simulateDispatch = (config) => {
     const gasOutput = Math.min(config.gas, remaining);
     remaining -= gasOutput;
 
-  
+
     const hourCost = smrOutput * 35 + hydroOutput * 10 + solarOutput * 0 + gasOutput * 85;
     totalCost += hourCost;
 
@@ -628,7 +626,7 @@ const ScoreBar = ({ label, score, detail }) => {
   );
 };
 
-// Site popup content
+
 const SitePopupContent = ({ site, onRemove }) => {
   const { latlng, scores } = site;
   const recommendation = getRecommendation(scores.overall);
@@ -719,7 +717,7 @@ const GridSimulationPanel = ({ sites = [] }) => {
 
   const simulateSitePerformance = (site, years = 25) => {
     const yearlyData = [];
-    const baseSMROutput = 300; 
+    const baseSMROutput = 300;
     const costPerMWh = 35;
 
     for (let year = 0; year < years; year++) {
@@ -727,22 +725,22 @@ const GridSimulationPanel = ({ sites = [] }) => {
 
       const smrOutput = baseSMROutput * (0.92 + year * 0.002);
 
-      const locationEfficiency = (site.scores.overall / 100) * 0.15; 
+      const locationEfficiency = (site.scores.overall / 100) * 0.15;
       const adjustedOutput = smrOutput * (1 + locationEfficiency);
 
-    
-      const maintenanceVariation = (Math.sin(year * 0.5) * 0.05); 
-      const weatherVariation = (Math.random() - 0.5) * 0.08; 
-      const coolingWaterAvailability = (Math.cos(year * 0.3) * 0.03); 
+
+      const maintenanceVariation = (Math.sin(year * 0.5) * 0.05);
+      const weatherVariation = (Math.random() - 0.5) * 0.08;
+      const coolingWaterAvailability = (Math.cos(year * 0.3) * 0.03);
       const totalVariation = maintenanceVariation + weatherVariation + coolingWaterAvailability;
 
       const finalOutput = adjustedOutput * (1 + totalVariation);
-      const yearlyCost = finalOutput * 8760 * costPerMWh; 
-      const co2Avoided = finalOutput * 8760 * 0.5; 
+      const yearlyCost = finalOutput * 8760 * costPerMWh;
+      const co2Avoided = finalOutput * 8760 * 0.5;
 
       yearlyData.push({
         year: yearLabel,
-        output: Math.max(finalOutput, baseSMROutput * 0.70), 
+        output: Math.max(finalOutput, baseSMROutput * 0.70),
         cost: yearlyCost,
         co2Avoided,
         siteScore: site.scores.overall
@@ -777,7 +775,7 @@ const GridSimulationPanel = ({ sites = [] }) => {
     setResults(simResults);
   };
 
- 
+
   const chartData = results ? {
     labels: results[0].performance.map(p => p.year),
     datasets: results.map((result, idx) => ({
@@ -811,7 +809,7 @@ const GridSimulationPanel = ({ sites = [] }) => {
 
   return (
     <div className="flex h-full">
-      
+
       <div className="w-72 p-4 border-r border-gray-200 bg-gray-50 overflow-y-auto">
         <div className="mb-4">
           <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Select Sites to Compare</h3>
@@ -869,11 +867,11 @@ const GridSimulationPanel = ({ sites = [] }) => {
         )}
       </div>
 
-      {/* Main Content */}
+
       <div className="flex-1 p-4 flex flex-col">
         {results && selectedSites.length > 0 && (
           <>
-          
+
             <div className="grid grid-cols-3 gap-4 mb-5">
               <div className="bg-linear-to-br from-blue-50 to-blue-100 p-4 rounded-lg">
                 <label className="text-xs text-blue-600 font-semibold uppercase">Comparison Period</label>
@@ -894,7 +892,7 @@ const GridSimulationPanel = ({ sites = [] }) => {
               </div>
             </div>
 
-            {/* Chart */}
+
             <div className="bg-white rounded-lg p-4 shadow-sm" style={{ height: '400px' }}>
               <h3 className="text-sm font-semibold text-gray-900 mb-3">SMR Output Over 25 Years by Location</h3>
               <Line data={chartData} options={chartOptions} />
@@ -931,9 +929,9 @@ const SiteSelectionPanel = ({
 }) => {
   return (
     <div className="flex h-full">
-      {/* Sidebar */}
+
       <div className="w-72 p-4 border-r border-gray-200 bg-gray-50 overflow-y-auto">
-        
+
         <div className="mb-5">
           <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Data Layers</h3>
           {[
@@ -954,7 +952,7 @@ const SiteSelectionPanel = ({
           ))}
         </div>
 
-        {/* Criteria Weights */}
+
         <div className="mb-5">
           <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Criteria Weights</h3>
           {[
@@ -980,7 +978,7 @@ const SiteSelectionPanel = ({
           ))}
         </div>
 
-        
+
         <div className="mb-5 p-3 bg-white rounded-lg">
           <h4 className="text-xs font-semibold text-gray-500 uppercase mb-2">Score Legend</h4>
           {[
@@ -996,7 +994,7 @@ const SiteSelectionPanel = ({
           ))}
         </div>
 
-      
+
         {sites.length > 0 && (
           <div>
             <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
@@ -1096,7 +1094,7 @@ const SiteSelectionPanel = ({
             </>
           )}
 
-        
+
           {layers.grid && geoData.gridLines.map((line, idx) => (
             <Polyline
               key={`grid-${idx}`}
@@ -1107,7 +1105,7 @@ const SiteSelectionPanel = ({
             </Polyline>
           ))}
 
-    
+
           {layers.population && geoData.populationCenters.map((city, idx) => (
             <React.Fragment key={`city-${idx}`}>
               <Circle
@@ -1145,7 +1143,7 @@ const SiteSelectionPanel = ({
 
 
 const Location = ({ onSiteSelect, initialSites = [] }) => {
- 
+
   const [activeTab, setActiveTab] = useState('siting');
 
 
@@ -1191,7 +1189,7 @@ const Location = ({ onSiteSelect, initialSites = [] }) => {
     setShowInstruction(true);
   }, []);
 
-  
+
   useEffect(() => {
     setSites(prev => prev.map(site => ({
       ...site,
@@ -1206,24 +1204,24 @@ const Location = ({ onSiteSelect, initialSites = [] }) => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-   
+
       <ChinStateIntro />
 
-     
+
       <div className="max-w-7xl mx-auto p-5 flex flex-col" style={{ minHeight: '800px' }}>
-        
+
         <header className="text-center mb-5">
           <h1 className="text-2xl font-bold text-gray-900 mb-1">🔋 SMR Siting & Grid Optimizer</h1>
           <p className="text-gray-500">Small Nuclear Power Plant site selection for Myanmar</p>
         </header>
 
-     
+
         <div className="flex gap-1 mb-5 bg-gray-200 p-1 rounded-lg">
           <button
             onClick={() => setActiveTab('siting')}
             className={`flex-1 py-2.5 px-4 rounded-md text-sm font-medium transition-all ${activeTab === 'siting'
-                ? 'bg-white text-gray-900 shadow-sm'
-                : 'text-gray-500 hover:text-gray-700'
+              ? 'bg-white text-gray-900 shadow-sm'
+              : 'text-gray-500 hover:text-gray-700'
               }`}
           >
             📍 Site Selection
@@ -1231,15 +1229,15 @@ const Location = ({ onSiteSelect, initialSites = [] }) => {
           <button
             onClick={() => setActiveTab('grid')}
             className={`flex-1 py-2.5 px-4 rounded-md text-sm font-medium transition-all ${activeTab === 'grid'
-                ? 'bg-white text-gray-900 shadow-sm'
-                : 'text-gray-500 hover:text-gray-700'
+              ? 'bg-white text-gray-900 shadow-sm'
+              : 'text-gray-500 hover:text-gray-700'
               }`}
           >
             ⚡ Grid Simulation
           </button>
         </div>
 
-        
+
         <div className="flex-1 bg-white rounded-xl shadow-lg overflow-hidden" style={{ minHeight: '600px' }}>
           {activeTab === 'siting' ? (
             <SiteSelectionPanel
